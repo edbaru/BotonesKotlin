@@ -1,3 +1,5 @@
 package com.example.botoneskotlin.datos.modelo
 
-data class DatoCurioso()
+data class DatoCurioso(
+     val fact: String
+)
