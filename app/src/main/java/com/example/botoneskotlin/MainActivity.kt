@@ -3,6 +3,7 @@ package com.example.botoneskotlin
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,10 +22,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.botoneskotlin.ui.theme.BotonesKotlinTheme
 import com.example.botoneskotlin.ui.view.DatoCuriosoViewModel
+import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.compose.chart.line.lineChart
+import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +57,7 @@ fun Pantalla(viewModel: DatoCuriosoViewModel = viewModel()) {
         ) {
             Contador()
             DatoCurioso(dato, viewModel)
+            GraficoSimple()
         }
     }
 }
@@ -89,10 +96,33 @@ fun DatoCurioso(dato: String, viewModel: DatoCuriosoViewModel) {
     }
 }
 
-//@Preview(showBackground = true)
+@Composable
+fun GraficoSimple() {
+    var datos by remember { mutableStateOf(listOf(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f)) }
+
+    val modelo = entryModelOf(*datos.toTypedArray())
+
+    Column(
+        modifier = Modifier.padding(top = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Chart(
+            chart = lineChart(),
+            model = modelo
+        )
+        Spacer(modifier = Modifier.padding(8.dp))
+        Button(onClick = {
+            datos = List(6) { (1..10).random().toFloat() }
+        }) {
+            Text("Actualizar gráfico")
+        }
+    }
+}
+
+@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     BotonesKotlinTheme {
-        Contador()
+        GraficoSimple()
     }
 }
