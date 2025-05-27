@@ -73,5 +73,6 @@ dependencies {
     implementation(libs.views)
     implementation(libs.compose.m2)
     implementation(libs.compose.m3)
+    implementation(libs.material3)
 
 }
